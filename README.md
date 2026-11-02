@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:E95420,100:2C001E&height=200&section=header&text=Ubuntu%20Server%20Homelab&fontSize=44&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Diario%20de%20mi%20servidor%20casero&descAlignY=58&descSize=18" alt="Ubuntu Server Homelab" width="100%" />
+  <img src="assets/header.svg" alt="Ubuntu Server Homelab · Diario de mi servidor casero" width="100%" />
 </div>
 
 <div align="center">
@@ -33,12 +33,12 @@
   <a href="#-glosario">Glosario</a>
 </div>
 
----
+<img src="assets/divider.svg" width="100%" alt="" />
 
 > [!NOTE]
 > **Privacidad:** en este repositorio no aparecen direcciones IP, puertos, dominios internos, claves ni identificadores de mi red. Los valores sensibles de los comandos están sustituidos por marcadores (`XXXX`).
 
----
+<img src="assets/divider.svg" width="100%" alt="" />
 
 ## 🛠 Arquitectura
 
@@ -89,7 +89,7 @@ flowchart LR
 4. **Separar usuario y admin.** Lo cotidiano cuelga de *Homepage User*; lo delicado (Portainer, Kopia, el propio proxy) solo es accesible desde *Homepage Admin*.
 5. **Guardar el estado.** Kopia hace snapshots de los datos de los servicios para poder volver atrás si algo se rompe.
 
----
+<img src="assets/divider.svg" width="100%" alt="" />
 
 ## 🧩 Por qué está montado así
 
@@ -105,7 +105,7 @@ Cada pieza responde a un problema concreto. Estas son las decisiones que hay det
 | 💾 **Copias incrementales y deduplicadas** | Kopia solo guarda lo que ha cambiado desde la última copia, así que puedo hacer snapshots a menudo sin llenar el disco. |
 | 🖥 **Servidor headless** | Sin entorno gráfico hay menos consumo de RAM, menos paquetes que actualizar y menos superficie de ataque. Todo se gestiona desde la terminal y los paneles web. |
 
----
+<img src="assets/divider.svg" width="100%" alt="" />
 
 ## 🧰 Stack tecnológico
 
@@ -159,7 +159,7 @@ Cada pieza responde a un problema concreto. Estas son las decisiones que hay det
 
 </details>
 
----
+<img src="assets/divider.svg" width="100%" alt="" />
 
 ## 📖 Bitácora
 
@@ -180,17 +180,24 @@ timeline
            : Limpieza y snapshot en Kopia
 ```
 
-### 📍 Fase 1 · Recuperar el almacenamiento tras reorganizar carpetas
+<img src="assets/fase-1.svg" alt="Fase 1 · Recuperar el almacenamiento tras reorganizar carpetas" width="100%" />
 
+> [!CAUTION]
 > **Incidencia:** tras mover y borrar carpetas que alojaban volúmenes de Docker, Nginx Proxy Manager empezó a fallar con su base de datos en modo solo lectura.
+>
 > **Síntoma:** errores `502 Bad Gateway` y `403 Forbidden` al abrir los servicios.
 
-- **Causa:** al reorganizar el almacenamiento se rompieron permisos y rutas de los volúmenes persistentes.
-- **Qué hice:**
-  1. Paré el stack de forma limpia con `docker compose down`.
-  2. Revisé y reajusté propietarios y permisos (`chown` / `chmod`) sobre los directorios persistentes.
-  3. Limpié redes huérfanas con `docker network prune` y levanté todo de nuevo con `docker compose up -d`.
-- **Resultado:** servicios de vuelta y base de datos otra vez con escritura.
+> [!WARNING]
+> **Causa:** al reorganizar el almacenamiento se rompieron permisos y rutas de los volúmenes persistentes.
+
+> [!NOTE]
+> **Qué hice:**
+> 1. Paré el stack de forma limpia con `docker compose down`.
+> 2. Revisé y reajusté propietarios y permisos (`chown` / `chmod`) sobre los directorios persistentes.
+> 3. Limpié redes huérfanas con `docker network prune` y levanté todo de nuevo con `docker compose up -d`.
+
+> [!TIP]
+> **Resultado:** servicios de vuelta y base de datos otra vez con escritura.
 
 <details>
 <summary><b>🔎 Por qué pasa esto</b></summary>
@@ -208,18 +215,20 @@ docker compose logs -f       # el log del servicio suele decir exactamente qué 
 
 </details>
 
----
+<img src="assets/divider.svg" width="100%" alt="" />
 
-### 📍 Fase 2 · Dos paneles: *Homepage User* y *Homepage Admin*
+<img src="assets/fase-2.svg" alt="Fase 2 · Dos paneles: Homepage User y Homepage Admin" width="100%" />
 
-Quería separar lo que usa cualquiera de lo que solo debo tocar yo, así que monté **dos instancias de [Homepage](https://gethomepage.dev/)**.
+> [!NOTE]
+> Quería separar lo que usa cualquiera de lo que solo debo tocar yo, así que monté **dos instancias de [Homepage](https://gethomepage.dev/)**.
 
 | Panel | Contenido |
 |---|---|
 | 🙋 **User** | Accesos directos a servicios del día a día (Nextcloud, Vaultwarden, etc.) sin exponer nada crítico. |
 | 🛡 **Admin** | Portainer, Kopia, Nginx Proxy Manager, métricas de CPU/RAM, estado de contenedores vía Docker Socket. |
 
-**Personalización:** estética *glassmorphism* / cyberpunk con `custom.css` (desenfoque de fondo con `backdrop-filter: blur`, bordes translúcidos y tarjetas flotantes).
+> [!TIP]
+> **Personalización:** estética *glassmorphism* / cyberpunk con `custom.css` (desenfoque de fondo con `backdrop-filter: blur`, bordes translúcidos y tarjetas flotantes).
 
 > [!WARNING]
 > **Ojo con el Docker Socket.** El panel de admin lee el estado de los contenedores a través de `/var/run/docker.sock`. Quien controla ese socket controla Docker, y quien controla Docker tiene, en la práctica, acceso de administrador al servidor. Por eso conviene montarlo en **solo lectura** (`/var/run/docker.sock:/var/run/docker.sock:ro`) o, mejor aún, poner delante un *socket proxy* que solo deje pasar las consultas de lectura. Y es otra razón para que ese panel sea solo de admin.
@@ -244,27 +253,30 @@ Es una foto fija del momento: los widgets con métricas en vivo se quedan congel
 
 </details>
 
----
+<img src="assets/divider.svg" width="100%" alt="" />
 
-### 📍 Fase 3 · Nginx Proxy Manager no arrancaba por un upstream huérfano
+<img src="assets/fase-3.svg" alt="Fase 3 · Nginx Proxy Manager no arrancaba por un upstream huérfano" width="100%" />
 
 ```text
 nginx: [emerg] host not found in upstream "authelia" in /data/nginx/proxy_host/9.conf:60
 ```
 
-- **Causa:** un proxy host seguía apuntando a un contenedor de autenticación (Authelia) que ya no existía. Nginx no resolvía el nombre y cancelaba todo el arranque.
-- **Solución, desde dentro del contenedor:**
+> [!WARNING]
+> **Causa:** un proxy host seguía apuntando a un contenedor de autenticación (Authelia) que ya no existía. Nginx no resolvía el nombre y cancelaba todo el arranque.
 
-```bash
-# 1. Comprobar la sintaxis de la configuración
-sudo docker exec -it nginx-proxy-manager nginx -t
-
-# 2. Desactivar el archivo roto sin borrarlo
-sudo docker exec -it nginx-proxy-manager mv /data/nginx/proxy_host/9.conf /data/nginx/proxy_host/9.conf.disabled
-
-# 3. Recargar Nginx en caliente
-sudo docker exec -it nginx-proxy-manager nginx -s reload
-```
+> [!NOTE]
+> **Solución, desde dentro del contenedor:**
+>
+> ```bash
+> # 1. Comprobar la sintaxis de la configuración
+> sudo docker exec -it nginx-proxy-manager nginx -t
+>
+> # 2. Desactivar el archivo roto sin borrarlo
+> sudo docker exec -it nginx-proxy-manager mv /data/nginx/proxy_host/9.conf /data/nginx/proxy_host/9.conf.disabled
+>
+> # 3. Recargar Nginx en caliente
+> sudo docker exec -it nginx-proxy-manager nginx -s reload
+> ```
 
 > [!TIP]
 > Renombrar a `.disabled` en lugar de borrar permite recuperar la configuración si hace falta más adelante.
@@ -280,26 +292,30 @@ Por eso, antes de recargar Nginx tras cualquier cambio, `nginx -t` es obligatori
 
 </details>
 
----
+<img src="assets/divider.svg" width="100%" alt="" />
 
-### 📍 Fase 4 · Acceso remoto con Tailscale desde una red restringida
+<img src="assets/fase-4.svg" alt="Fase 4 · Acceso remoto con Tailscale desde una red restringida" width="100%" />
 
-Mi objetivo era entrar a mis servicios desde otro equipo Ubuntu conectado a una red con filtros (proxy y cortafuegos). Aquí fue donde más aprendí, porque fallaron tres cosas seguidas.
+> [!IMPORTANT]
+> Mi objetivo era entrar a mis servicios desde otro equipo Ubuntu conectado a una red con filtros (proxy y cortafuegos). Aquí fue donde más aprendí, porque fallaron tres cosas seguidas.
 
 <details open>
 <summary><b>1️⃣ Error 403 al aceptar la invitación</b></summary>
 
 <br>
 
-- **Causa probable:** la red bloqueaba el flujo de autenticación OAuth, o había otra cuenta del navegador con la sesión abierta.
-- **Soluciones:**
-  - Aceptar la invitación en una ventana de incógnito.
-  - Hacer el login una sola vez desde la red del móvil (punto de acceso), y volver después a la red restringida.
-  - Saltarse el navegador con una **Auth Key** generada desde el panel de Tailscale:
+> [!WARNING]
+> **Causa probable:** la red bloqueaba el flujo de autenticación OAuth, o había otra cuenta del navegador con la sesión abierta.
 
-```bash
-sudo tailscale up --authkey=tskey-auth-XXXXXXXXXXXXXX
-```
+> [!TIP]
+> **Soluciones:**
+> - Aceptar la invitación en una ventana de incógnito.
+> - Hacer el login una sola vez desde la red del móvil (punto de acceso), y volver después a la red restringida.
+> - Saltarse el navegador con una **Auth Key** generada desde el panel de Tailscale:
+>
+> ```bash
+> sudo tailscale up --authkey=tskey-auth-XXXXXXXXXXXXXX
+> ```
 
 </details>
 
@@ -312,14 +328,17 @@ sudo tailscale up --authkey=tskey-auth-XXXXXXXXXXXXXX
 register request: http 400: node nodekey:... already exists
 ```
 
-- **Causa:** el equipo ya se había registrado antes y conservaba una clave de nodo antigua.
-- **Solución:**
+> [!WARNING]
+> **Causa:** el equipo ya se había registrado antes y conservaba una clave de nodo antigua.
 
-```bash
-sudo tailscale logout
-sudo systemctl restart tailscaled
-sudo tailscale up --force-reauth
-```
+> [!TIP]
+> **Solución:**
+>
+> ```bash
+> sudo tailscale logout
+> sudo systemctl restart tailscaled
+> sudo tailscale up --force-reauth
+> ```
 
 </details>
 
@@ -328,14 +347,18 @@ sudo tailscale up --force-reauth
 
 <br>
 
-- **Causa:** conflicto de DNS entre la red local y la red mesh.
-- **Solución:** impedir que Tailscale sustituya el DNS del equipo.
+> [!WARNING]
+> **Causa:** conflicto de DNS entre la red local y la red mesh.
 
-```bash
-sudo tailscale up --accept-dns=false
-```
+> [!TIP]
+> **Solución:** impedir que Tailscale sustituya el DNS del equipo.
+>
+> ```bash
+> sudo tailscale up --accept-dns=false
+> ```
 
-- **Efecto secundario:** con el DNS de la red restringida ya no se resuelven mis dominios internos, pero **sí funciona entrar por la IP de Tailscale del servidor**, lo que confirma que el túnel funciona.
+> [!NOTE]
+> **Efecto secundario:** con el DNS de la red restringida ya no se resuelven mis dominios internos, pero **sí funciona entrar por la IP de Tailscale del servidor**, lo que confirma que el túnel funciona.
 
 </details>
 
@@ -377,15 +400,35 @@ Con `tailscale ping <nodo>` se ve si la conexión va directa o `via DERP`.
 
 </details>
 
----
+<img src="assets/divider.svg" width="100%" alt="" />
 
-### 📍 Fase 5 · Copias de seguridad con Kopia
+<img src="assets/fase-5.svg" alt="Fase 5 · Copias de seguridad con Kopia" width="100%" />
 
-Después de mover y borrar carpetas, quise asegurarme de que las copias seguían apuntando a rutas válidas.
+> [!NOTE]
+> Después de mover y borrar carpetas, quise asegurarme de que las copias seguían apuntando a rutas válidas.
 
-- **Limpieza:** eliminé las políticas de snapshot que apuntaban a carpetas que ya no existen.
-- **Snapshot manual:** lancé una copia a mano tras terminar el mantenimiento, para dejar guardado el estado bueno (con Nginx arreglado y los dos Homepage funcionando).
-- **Verificación:** comprobé que aparecía el nuevo snapshot con la fecha del día y sin errores.
+<table>
+  <tr>
+    <td width="33%" valign="top" align="center">
+      <h3>🧹</h3>
+      <b>Limpieza</b>
+      <br><br>
+      <sub>Eliminé las políticas de snapshot que apuntaban a carpetas que ya no existen.</sub>
+    </td>
+    <td width="33%" valign="top" align="center">
+      <h3>📸</h3>
+      <b>Snapshot manual</b>
+      <br><br>
+      <sub>Lancé una copia a mano tras terminar el mantenimiento, para dejar guardado el estado bueno (con Nginx arreglado y los dos Homepage funcionando).</sub>
+    </td>
+    <td width="33%" valign="top" align="center">
+      <h3>✅</h3>
+      <b>Verificación</b>
+      <br><br>
+      <sub>Comprobé que aparecía el nuevo snapshot con la fecha del día y sin errores.</sub>
+    </td>
+  </tr>
+</table>
 
 > [!IMPORTANT]
 > Regla que me he puesto: **cada vez que reorganizo carpetas, reviso las rutas en Kopia y lanzo un snapshot manual antes de dar el trabajo por terminado.**
@@ -411,7 +454,7 @@ kopia policy list             # qué rutas tienen política (aquí se ven las hu
 
 </details>
 
----
+<img src="assets/divider.svg" width="100%" alt="" />
 
 ## 🔧 Problemas y soluciones rápidas
 
@@ -425,7 +468,7 @@ kopia policy list             # qué rutas tienen política (aquí se ven las hu
 | No cargan mis dominios internos desde fuera | El DNS externo no sabe resolverlos | Entrar por IP de Tailscale, o configurar AdGuard como DNS de la red mesh |
 | No encuentro el HTML de Homepage | Es una app Next.js, no hay plantilla | Editar los `.yaml` y `custom.css` |
 
----
+<img src="assets/divider.svg" width="100%" alt="" />
 
 ## 📂 Estructura del proyecto
 
@@ -441,18 +484,44 @@ kopia policy list             # qué rutas tienen política (aquí se ven las hu
 └── kopia/                     # Configuración y repositorio de snapshots
 ```
 
----
+<img src="assets/divider.svg" width="100%" alt="" />
 
 ## 🧠 Lecciones aprendidas
 
-- 🗂 **Mover o borrar carpetas en un servidor con Docker nunca es solo mover carpetas:** afecta a volúmenes, permisos, proxies y copias de seguridad.
-- 🪪 **Un error `host not found in upstream` suele significar que quedó una referencia a algo que ya no existe.**
-- 📱 **Cuando una red bloquea la autenticación, hay que probar desde otra red** antes de culpar a la configuración propia.
-- 🧪 **Probar por IP antes que por dominio** separa los problemas de red de los problemas de DNS.
-- 💾 **Después de cada cambio importante, un snapshot manual.** Tarda segundos y ahorra horas.
-- 🧾 **Anotar todo.** Este repositorio existe porque casi todos los errores se me olvidarían a las dos semanas.
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>🗂</h3>
+      <b>Mover o borrar carpetas en un servidor con Docker nunca es solo mover carpetas:</b> afecta a volúmenes, permisos, proxies y copias de seguridad.
+    </td>
+    <td width="50%" valign="top">
+      <h3>🪪</h3>
+      <b>Un error <code>host not found in upstream</code> suele significar que quedó una referencia a algo que ya no existe.</b>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>📱</h3>
+      <b>Cuando una red bloquea la autenticación, hay que probar desde otra red</b> antes de culpar a la configuración propia.
+    </td>
+    <td width="50%" valign="top">
+      <h3>🧪</h3>
+      <b>Probar por IP antes que por dominio</b> separa los problemas de red de los problemas de DNS.
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>💾</h3>
+      <b>Después de cada cambio importante, un snapshot manual.</b> Tarda segundos y ahorra horas.
+    </td>
+    <td width="50%" valign="top">
+      <h3>🧾</h3>
+      <b>Anotar todo.</b> Este repositorio existe porque casi todos los errores se me olvidarían a las dos semanas.
+    </td>
+  </tr>
+</table>
 
----
+<img src="assets/divider.svg" width="100%" alt="" />
 
 ## 📚 Glosario
 
@@ -479,14 +548,14 @@ kopia policy list             # qué rutas tienen política (aquí se ven las hu
 
 </details>
 
----
+<img src="assets/divider.svg" width="100%" alt="" />
 
 ## 🗺 Próximos pasos
 
 - [ ] Hacer que mis dominios internos también se resuelvan desde fuera de casa (AdGuard Home como DNS de la red Tailscale).
 - [ ] Seguir ampliando esta bitácora con cada cambio que haga en el servidor.
 
----
+<img src="assets/divider.svg" width="100%" alt="" />
 
 <div align="center">
   <sub>Servidor casero · Ubuntu Server · Docker · Hecho a base de prueba y error 🧪</sub>

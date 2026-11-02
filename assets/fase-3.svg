@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 170" width="1000" height="170" role="img" aria-label="Fase 3 · Nginx Proxy Manager no arrancaba por un upstream huérfano">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#161b22"/><stop offset="1" stop-color="#0d1117"/>
+    </linearGradient>
+    <linearGradient id="acc" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f59e0b"/><stop offset="1" stop-color="#E95420"/>
+    </linearGradient>
+    <clipPath id="c"><rect x="1" y="1" width="998" height="168" rx="16"/></clipPath>
+  </defs>
+  <g clip-path="url(#c)">
+    <rect width="1000" height="170" fill="url(#bg)"/>
+    <rect width="8" height="170" fill="url(#acc)"/>
+    <circle cx="105" cy="85.0" r="120" fill="#f59e0b" fill-opacity=".06"/>
+    <text x="985" y="156" text-anchor="end" font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="104" font-weight="900" fill="#f59e0b" fill-opacity=".10">03</text>
+  </g>
+  <rect x="1" y="1" width="998" height="168" rx="16" fill="none" stroke="#30363d" stroke-width="1.5"/>
+  <g transform="translate(105 81.0)">
+    <circle r="40" fill="#0d1117" stroke="#f59e0b" stroke-opacity=".6" stroke-width="2"/>
+    <circle r="40" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="40 212" stroke-linecap="round">
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="6s" repeatCount="indefinite"/>
+    </circle>
+    <g transform="scale(.82)"><circle cx="-22" cy="0" r="7" fill="#f59e0b"/>
+          <path d="M-14 0 H6 M6 0 L22 -16 M6 0 L22 16" stroke="#f59e0b" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="24" cy="-17" r="5" fill="none" stroke="#f59e0b" stroke-width="3"/>
+          <line x1="18" y1="12" x2="30" y2="24" stroke="#ef4444" stroke-width="3" stroke-linecap="round"/>
+          <line x1="30" y1="12" x2="18" y2="24" stroke="#ef4444" stroke-width="3" stroke-linecap="round"/></g>
+  </g>
+  <text x="200" y="36" font-family="'Fira Code', 'SFMono-Regular', Consolas, 'Liberation Mono', monospace" font-size="13" letter-spacing="2" fill="#f59e0b">FASE 03 · BITÁCORA</text>
+  <g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif"><text x="200" y="70" font-size="27" font-weight="700" fill="#f0f6fc">Nginx Proxy Manager no arrancaba por un</text><text x="200" y="105" font-size="27" font-weight="700" fill="#f0f6fc">upstream huérfano</text></g>
+  <g font-family="'Fira Code', 'SFMono-Regular', Consolas, 'Liberation Mono', monospace"><rect x="200" y="122" width="70" height="26" rx="13" fill="#f59e0b" fill-opacity=".14" stroke="#f59e0b" stroke-opacity=".55"/><text x="235" y="140" text-anchor="middle" font-size="13" fill="#e6edf3">Nginx</text><rect x="278" y="122" width="128" height="26" rx="13" fill="#f59e0b" fill-opacity=".14" stroke="#f59e0b" stroke-opacity=".55"/><text x="342" y="140" text-anchor="middle" font-size="13" fill="#e6edf3">Proxy inverso</text><rect x="415" y="122" width="79" height="26" rx="13" fill="#f59e0b" fill-opacity=".14" stroke="#f59e0b" stroke-opacity=".55"/><text x="454" y="140" text-anchor="middle" font-size="13" fill="#e6edf3">Docker</text></g>
+  <g font-family="'Fira Code', 'SFMono-Regular', Consolas, 'Liberation Mono', monospace" transform="translate(862 22)">
+    <rect width="114" height="30" rx="15" fill="#22c55e" fill-opacity=".14" stroke="#22c55e" stroke-opacity=".6"/>
+    <path d="M14 15 l5 5 l9 -10" stroke="#22c55e" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="36" y="20" font-size="13" font-weight="700" fill="#86efac" letter-spacing="1">RESUELTO</text>
+  </g>
+</svg>

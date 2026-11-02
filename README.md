@@ -299,10 +299,7 @@ Por eso, antes de recargar Nginx tras cualquier cambio, `nginx -t` es obligatori
 > [!IMPORTANT]
 > Mi objetivo era entrar a mis servicios desde otro equipo Ubuntu conectado a una red con filtros (proxy y cortafuegos). Aquí fue donde más aprendí, porque fallaron tres cosas seguidas.
 
-<details open>
-<summary><b>1️⃣ Error 403 al aceptar la invitación</b></summary>
-
-<br>
+#### 1️⃣ Error 403 al aceptar la invitación
 
 > [!WARNING]
 > **Causa probable:** la red bloqueaba el flujo de autenticación OAuth, o había otra cuenta del navegador con la sesión abierta.
@@ -317,12 +314,7 @@ Por eso, antes de recargar Nginx tras cualquier cambio, `nginx -t` es obligatori
 > sudo tailscale up --authkey=tskey-auth-XXXXXXXXXXXXXX
 > ```
 
-</details>
-
-<details open>
-<summary><b>2️⃣ Error <code>nodekey already exists</code></b></summary>
-
-<br>
+#### 2️⃣ Error `nodekey already exists`
 
 ```text
 register request: http 400: node nodekey:... already exists
@@ -340,12 +332,7 @@ register request: http 400: node nodekey:... already exists
 > sudo tailscale up --force-reauth
 > ```
 
-</details>
-
-<details open>
-<summary><b>3️⃣ Al conectar Tailscale se perdía la conexión de red</b></summary>
-
-<br>
+#### 3️⃣ Al conectar Tailscale se perdía la conexión de red
 
 > [!WARNING]
 > **Causa:** conflicto de DNS entre la red local y la red mesh.
@@ -359,8 +346,6 @@ register request: http 400: node nodekey:... already exists
 
 > [!NOTE]
 > **Efecto secundario:** con el DNS de la red restringida ya no se resuelven mis dominios internos, pero **sí funciona entrar por la IP de Tailscale del servidor**, lo que confirma que el túnel funciona.
-
-</details>
 
 **Comandos de diagnóstico que me han salvado:**
 
@@ -449,8 +434,7 @@ kopia snapshot create <ruta>  # lanzar un snapshot manual
 kopia policy list             # qué rutas tienen política (aquí se ven las huérfanas)
 ```
 
-> [!TIP]
-> Una copia que nunca se ha probado a restaurar es solo una esperanza. De vez en cuando conviene recuperar algún archivo de un snapshot para confirmar que todo el proceso funciona.
+> 💡 Una copia que nunca se ha probado a restaurar es solo una esperanza. De vez en cuando conviene recuperar algún archivo de un snapshot para confirmar que todo el proceso funciona.
 
 </details>
 
